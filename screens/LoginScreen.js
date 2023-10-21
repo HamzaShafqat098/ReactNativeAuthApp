@@ -10,7 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const handleLogin = async () => {
@@ -29,6 +29,11 @@ const LoginScreen = () => {
                         }
                         await AsyncStorage.setItem("users", JSON.stringify(usersArray)).then(() => {
                             Alert.alert("Login Successful", "Welcome Back, " + user.username);
+                            navigation.navigate("Profile", {
+                                email: user.email,
+                                username: user.username,
+                                password: user.password,
+                            })
                         }).catch((error) => {
                             console.error("Error Updating AsyncStorage: ", error);
                         })
