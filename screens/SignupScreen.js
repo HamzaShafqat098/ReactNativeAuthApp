@@ -10,7 +10,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SignupScreen = () => {
+const SignupScreen = ({navigation}) => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -33,6 +33,7 @@ const SignupScreen = () => {
                 usersArray.push(user);
                 await AsyncStorage.setItem("users", JSON.stringify(usersArray));
                 Alert.alert("Signup Successful", "You Have Successfully Signed Up!")
+                navigation.navigate("Log In");
             }
         } catch (error) {
             console.log("Error Signing Up: ", error);
