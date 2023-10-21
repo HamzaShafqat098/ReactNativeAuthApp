@@ -11,6 +11,38 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const handleLogin = async () => {
+        try {
+            const users = await AsyncStorage.getItem("users");
+            if (users) {
+                const usersArray = JSON.parse(users);
+                const user = usersArray.find((user) => user.email === email && user.password === password);
+                if (user) {
+                    const userIndex = usersArray.findIndex((user) => user.email === email && user.password === password);
+                    if (userIndex !== -1) {
+                        usersArray[userIndex] = {
+                            ...usersArray[userIndex],
+                            currentScreen: "Log In",
+                            isLoggedIn: true,
+                        }
+                        await AsyncStorage.setItem("users", JSON.stringify(usersArray)).then(() => {
+                            Alert.alert("Login Successful", "Welcome Back, " + user.username);
+                        }).catch((error) => {
+                            console.error("Error Updating AsyncStorage: ", error);
+                        })
+                    }
+                } else {
+                    Alert.alert("Login Failed", "Invalid Email Or Password. Please Try Again.");
+                }
+            } else {
+                Alert.alert("Login Failed", "No Registered Users Found.");
+            }
+        } catch (error) {
+            console.error("Error Logging In: ", error);
+        }
+    }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,7 +56,7 @@ const LoginScreen = () => {
       </View>
       <View style={styles.inputContainer}>
         <Ionicons name="mail" size={24} color="black" style={styles.icon} />
-        <TextInput placeholder="Email" style={styles.input} />
+        <TextInput placeholder="Email" style={styles.input} value={email} onChangeText={setEmail} />
       </View>
       <View style={styles.inputContainer}>
         <Ionicons
@@ -37,9 +69,11 @@ const LoginScreen = () => {
           placeholder="Password"
           secureTextEntry
           style={styles.input}
+          value={password}
+          onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Ionicons name="arrow-forward" size={24} color="white" />
       </TouchableOpacity>
     </View>

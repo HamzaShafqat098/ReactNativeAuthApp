@@ -36,7 +36,7 @@ const SignupScreen = ({navigation}) => {
                 navigation.navigate("Log In");
             }
         } catch (error) {
-            console.log("Error Signing Up: ", error);
+            console.error("Error Signing Up: ", error);
         }
     }
   return (
