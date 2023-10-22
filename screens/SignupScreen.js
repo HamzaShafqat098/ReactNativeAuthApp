@@ -20,7 +20,7 @@ const SignupScreen = ({navigation}) => {
                 email: email,
                 username: username,
                 password: password,
-                currentScreen: "Sign Up",
+                currentScreen: "Log In",
                 isLoggedIn: false,
                 isDarkMode: false,
             }
@@ -76,6 +76,9 @@ const SignupScreen = ({navigation}) => {
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
         <Ionicons name="arrow-forward" size={24} color="white" />
       </TouchableOpacity>
+      <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate("Log In")}>
+        <Text style={styles.loginButtonText}>Already Have An Account? Log In</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -90,6 +93,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
     flexDirection: "row",
+    justifyContent: "center",
   },
   headerIcon: {
     marginRight: 10,
@@ -121,6 +125,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "skyblue",
   },
+  loginButton: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+  loginButtonText: {
+    color: "blue",
+    textDecorationLine: "underline",
+  }
 });
 
 export default SignupScreen;

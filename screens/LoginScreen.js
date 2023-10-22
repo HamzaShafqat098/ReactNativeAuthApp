@@ -24,7 +24,7 @@ const LoginScreen = ({navigation}) => {
                     if (userIndex !== -1) {
                         usersArray[userIndex] = {
                             ...usersArray[userIndex],
-                            currentScreen: "Log In",
+                            currentScreen: "Profile",
                             isLoggedIn: true,
                         }
                         await AsyncStorage.setItem("users", JSON.stringify(usersArray)).then(() => {
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
     flexDirection: "row",
+    justifyContent: "center",
   },
   headerIcon: {
     marginRight: 10,
